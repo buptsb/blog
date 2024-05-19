@@ -1,10 +1,10 @@
 {
     "title":"buptsb",
-    "subTitle":"",
+    "subTitle":"Frontend / Chromium / V8 / Devtools(TTD) / Networking(TCP/QUIC) / ?",
     "avatarUrl":"https://www.svgrepo.com/show/398339/smiling-face-with-open-mouth-and-cold-sweat.svg",
     "GMEEK_VERSION":"last",
     "exlink":{"person":"https://x.com/buptdsb"},
     "onePageListNum":15,
-    "singlePage":["about"],
+    "singlePage": ["about"],
     "UTC":8
 }
