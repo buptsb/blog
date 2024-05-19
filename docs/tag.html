@@ -9,8 +9,8 @@
         let theme = localStorage.getItem("meek_theme") || "light";
         document.documentElement.setAttribute("data-color-mode", theme);
     </script>
-<meta name="description" content="@buptsb's Blog search page">
-<title>@buptsb's Blog - Tag</title>
+<meta name="description" content="@buptsb's blog search page">
+<title>@buptsb's blog - Tag</title>
 
 </head>
 <style>
@@ -75,7 +75,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <nav class="SideNav"></nav>
 <div class="notFind" style="display:none;font-size:24px;margin:8px;">Not Find</div>
 </div>
-    <div id="footer">Copyright © <span id="year"></span><a href="https://buptsb.github.io/blog"> @buptsb's Blog </a>
+    <div id="footer">Copyright © <span id="year"></span><a href="https://buptsb.github.io/blog"> @buptsb's blog </a>
 <p>
 <span id="runday"></span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a>
 </p>
@@ -236,7 +236,7 @@ function setClassDisplay(label){
     let lists = document.getElementsByClassName("lists");
     let tagTitle = document.getElementsByClassName("tagTitle")[0];
     tagTitle.innerHTML="Tag #"+label;
-    document.title=label+" - @buptsb's Blog";
+    document.title=label+" - @buptsb's blog";
     document.getElementsByClassName("subnav-search-input")[0].value='';
     if(label=="All"){
         for(let i = 0; i < lists.length; i++){lists[i].style.display='block';}
@@ -264,8 +264,8 @@ function searchShow(){
     let tagTitle = document.getElementsByClassName("tagTitle")[0];
     let searchInput = document.getElementsByClassName("subnav-search-input")[0].value;
     tagTitle.innerHTML="Search #"+searchInput;
-    if(searchInput==''){document.title="Search - @buptsb's Blog";}
-    else{document.title=searchInput+" - @buptsb's Blog";}
+    if(searchInput==''){document.title="Search - @buptsb's blog";}
+    else{document.title=searchInput+" - @buptsb's blog";}
     let a=0;
     window.location.hash="#"+(searchInput);
     for(let i = 0; i < lists.length; i++){
