@@ -35,7 +35,7 @@ jobs:
 
       - name: Clone source code
         run: |
-          git clone https://github.com/zckevin/Gmeek.git /opt/Gmeek;
+          git clone https://github.com/buptsb/Gmeek.git /opt/Gmeek;
           cd /opt/Gmeek/
 
       - name: Install dependencies
