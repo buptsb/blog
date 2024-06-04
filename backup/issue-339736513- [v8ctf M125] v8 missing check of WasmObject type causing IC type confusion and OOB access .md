@@ -57,6 +57,33 @@ pwn();
 
 # Analysis
 
+## using try...catch to set ic handler
+
+As we all know, set property on `WasmObjects` would throw `MessageTemplate::kWasmObjectsAreOpaque` error.
+
+But `UpdateCaches` is called before `Object::SetProperty`, so we could add `WasmObject` to IC just with a try...catch to suppress the error.
+
+```C++
+MaybeHandle<Object> StoreIC::Store(Handle<Object> object, Handle<Name> name,
+                                   Handle<Object> value,
+                                   StoreOrigin store_origin) {
+  ...
+  if (use_ic) {
+    UpdateCaches(&it, value, store_origin);    <------ 1
+  } else if (state() == NO_FEEDBACK) {
+    ...
+  }
+
+  if (IsAnyDefineOwn()) {
+    ...
+  } else {
+    MAYBE_RETURN_NULL(Object::SetProperty(&it, value, store_origin)); <------ 2
+  }
+}
+```
+
+## polymorphic IC exploit
+
 Please checkout [@mistymntncop](https://x.com/mistymntncop)'s writeup about [CVE-2023-3079](https://github.com/mistymntncop/CVE-2023-3079), and my poc about [CVE-2023-4762](https://x.com/buptsb/status/1706984650927968501),
 it's basicly same exploit technique using v8 polymorphic IC, can't believe it's still exploitable!
 

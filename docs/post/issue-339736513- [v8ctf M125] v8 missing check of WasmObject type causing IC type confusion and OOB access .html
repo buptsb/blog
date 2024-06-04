@@ -121,6 +121,26 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <span class="pl-en">pwn</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
 <p><a target="_blank" rel="noopener noreferrer" href="https://github.com/buptsb/blog/assets/666724/c3a5b520-c05e-465d-ad01-9c148a59941f"><img src="https://github.com/buptsb/blog/assets/666724/c3a5b520-c05e-465d-ad01-9c148a59941f" alt="image" style="max-width: 100%;"></a></p>
 <h1>Analysis</h1>
+<h2>using try...catch to set ic handler</h2>
+<p>As we all know, set property on <code class="notranslate">WasmObjects</code> would throw <code class="notranslate">MessageTemplate::kWasmObjectsAreOpaque</code> error.</p>
+<p>But <code class="notranslate">UpdateCaches</code> is called before <code class="notranslate">Object::SetProperty</code>, so we could add <code class="notranslate">WasmObject</code> to IC just with a try...catch to suppress the error.</p>
+<div class="highlight highlight-source-c++"><pre class="notranslate">MaybeHandle&lt;Object&gt; <span class="pl-en">StoreIC::Store</span>(<span class="pl-c1">Handle</span>&lt;Object&gt; object, <span class="pl-c1">Handle</span>&lt;Name&gt; name,
+                                   <span class="pl-c1">Handle</span>&lt;Object&gt; value,
+                                   StoreOrigin store_origin) {
+  ...
+  <span class="pl-k">if</span> (use_ic) {
+    <span class="pl-c1">UpdateCaches</span>(&amp;it, value, store_origin);    &lt;------ <span class="pl-c1">1</span>
+  } <span class="pl-k">else</span> <span class="pl-k">if</span> (<span class="pl-c1">state</span>() == NO_FEEDBACK) {
+    ...
+  }
+
+  <span class="pl-k">if</span> (<span class="pl-c1">IsAnyDefineOwn</span>()) {
+    ...
+  } <span class="pl-k">else</span> {
+    <span class="pl-c1">MAYBE_RETURN_NULL</span>(<span class="pl-c1">Object::SetProperty</span>(&amp;it, value, store_origin)); &lt;------ <span class="pl-c1">2</span>
+  }
+}</pre></div>
+<h2>polymorphic IC exploit</h2>
 <p>Please checkout <a href="https://x.com/mistymntncop" rel="nofollow">@mistymntncop</a>'s writeup about <a href="https://github.com/mistymntncop/CVE-2023-3079">CVE-2023-3079</a>, and my poc about <a href="https://x.com/buptsb/status/1706984650927968501" rel="nofollow">CVE-2023-4762</a>,<br>
 it's basicly same exploit technique using v8 polymorphic IC, can't believe it's still exploitable!</p></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
