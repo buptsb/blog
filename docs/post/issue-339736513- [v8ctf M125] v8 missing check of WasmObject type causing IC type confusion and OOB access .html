@@ -73,6 +73,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
     <div id="content">
 <div class="markdown-body" id="postBody"><p>author: <a href="https://x.com/mistymntncop" rel="nofollow">@mistymntncop</a>, <a href="https://x.com/buptsb" rel="nofollow">@buptsb</a><br>
 2024-06-04 19:45:52</p>
+<p><a href="https://x.com/buptsb/status/1797961291946205386" rel="nofollow">https://x.com/buptsb/status/1797961291946205386</a></p>
 <p><em>This writeup is the FIRST public disclosure for this vulnerability.</em></p>
 <h1>Info</h1>
 <p>[ic] Use slow stub element handler for non-JSObjects<br>
@@ -121,7 +122,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <span class="pl-en">pwn</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
 <p><a target="_blank" rel="noopener noreferrer" href="https://github.com/buptsb/blog/assets/666724/c3a5b520-c05e-465d-ad01-9c148a59941f"><img src="https://github.com/buptsb/blog/assets/666724/c3a5b520-c05e-465d-ad01-9c148a59941f" alt="image" style="max-width: 100%;"></a></p>
 <h1>Analysis</h1>
-<h2>using try...catch to set ic handler</h2>
+<h2>using try...catch to set IC handler</h2>
 <p>As we all know, set property on <code class="notranslate">WasmObjects</code> would throw <code class="notranslate">MessageTemplate::kWasmObjectsAreOpaque</code> error.</p>
 <p>But <code class="notranslate">UpdateCaches</code> is called before <code class="notranslate">Object::SetProperty</code>, so we could add <code class="notranslate">WasmObject</code> to IC just with a try...catch to suppress the error.</p>
 <div class="highlight highlight-source-c++"><pre class="notranslate">MaybeHandle&lt;Object&gt; <span class="pl-en">StoreIC::Store</span>(<span class="pl-c1">Handle</span>&lt;Object&gt; object, <span class="pl-c1">Handle</span>&lt;Name&gt; name,

@@ -1,6 +1,8 @@
 author: [@mistymntncop](https://x.com/mistymntncop), [@buptsb](https://x.com/buptsb)
 2024-06-04 19:45:52
 
+https://x.com/buptsb/status/1797961291946205386
+
 _This writeup is the FIRST public disclosure for this vulnerability._
 
 # Info
@@ -57,7 +59,7 @@ pwn();
 
 # Analysis
 
-## using try...catch to set ic handler
+## using try...catch to set IC handler
 
 As we all know, set property on `WasmObjects` would throw `MessageTemplate::kWasmObjectsAreOpaque` error.
 
