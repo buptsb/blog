@@ -125,20 +125,20 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <h2>using try...catch to set IC handler</h2>
 <p>As we all know, set property on <code class="notranslate">WasmObjects</code> would throw <code class="notranslate">MessageTemplate::kWasmObjectsAreOpaque</code> error.</p>
 <p>But <code class="notranslate">UpdateCaches</code> is called before <code class="notranslate">Object::SetProperty</code>, so we could add <code class="notranslate">WasmObject</code> to IC just with a try...catch to suppress the error.</p>
-<div class="highlight highlight-source-c++"><pre class="notranslate">MaybeHandle&lt;Object&gt; <span class="pl-smi">StoreIC</span>::<span class="pl-en">Store</span>(Handle&lt;Object&gt; object, Handle&lt;Name&gt; name,
-                                   Handle&lt;Object&gt; value,
+<div class="highlight highlight-source-c++"><pre class="notranslate">MaybeHandle&lt;Object&gt; <span class="pl-en">StoreIC::Store</span>(<span class="pl-c1">Handle</span>&lt;Object&gt; object, <span class="pl-c1">Handle</span>&lt;Name&gt; name,
+                                   <span class="pl-c1">Handle</span>&lt;Object&gt; value,
                                    StoreOrigin store_origin) {
   ...
-  if (use_ic) {
-    UpdateCaches(&amp;it, value, store_origin);    &lt;------ 1
-  } else if (state() == NO_FEEDBACK) {
+  <span class="pl-k">if</span> (use_ic) {
+    <span class="pl-c1">UpdateCaches</span>(&amp;it, value, store_origin);    &lt;------ <span class="pl-c1">1</span>
+  } <span class="pl-k">else</span> <span class="pl-k">if</span> (<span class="pl-c1">state</span>() == NO_FEEDBACK) {
     ...
   }
 
-  if (IsAnyDefineOwn()) {
+  <span class="pl-k">if</span> (<span class="pl-c1">IsAnyDefineOwn</span>()) {
     ...
-  } else {
-    MAYBE_RETURN_NULL(<span class="pl-smi">Object</span>::<span class="pl-en">SetProperty</span>(&amp;it, value, store_origin)); &lt;------ 2
+  } <span class="pl-k">else</span> {
+    <span class="pl-c1">MAYBE_RETURN_NULL</span>(<span class="pl-c1">Object::SetProperty</span>(&amp;it, value, store_origin)); &lt;------ <span class="pl-c1">2</span>
   }
 }</pre></div>
 <h2>polymorphic IC exploit</h2>
